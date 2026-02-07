@@ -15,28 +15,12 @@ fn countResponseTimeRegressions(responseTimes: &[i32]) -> i32 {
     let mut counter = 0;
     let mut subtotal = 0;
 
-    for rt in responseTimes {
-        if divisor == 0 {
-            subtotal = *rt;
-            divisor = 1
-        }
-        //println!("Divisor {divisor}, Subbie: {subtotal}");
-        else {
-            let mut average = subtotal / divisor;
-            // println!(
-            //     "subtotal: {} divisor: {} Average: {}",
-            //     subtotal, divisor, &average
-            // );
-            let mut floaterage = subtotal as f64 / divisor as f64;
-            // println!("Float Average: {}", &floaterage);
-
-            if *rt > average {
-                counter += 1;
-            }
-            subtotal = subtotal + *rt;
-            divisor = divisor + 1;
-        }
-    }
+    for entry in responseTimes {
+		subtotal += entry;
+		divisor += 1;
+		if entry > &(&subtotal / &divisor) {
+			counter += 1;
+	}}
     counter
 }
 
