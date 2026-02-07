@@ -1,6 +1,5 @@
 use std::io::{self, BufRead};
 
-
 /*
  * Complete the 'countResponseTimeRegressions' function below.
  *
@@ -9,47 +8,65 @@ use std::io::{self, BufRead};
  */
 
 fn countResponseTimeRegressions(responseTimes: &[i32]) -> i32 {
-	// Write your code here
-	//println!("{:?}", &responseTimes);
+    // Write your code here
+    //println!("{:?}", &responseTimes);
 
-	let mut divisor = 0;
-	let mut counter = 0;
-	let mut subtotal = 0;
+    let mut divisor = 0;
+    let mut counter = 0;
+    let mut subtotal = 0;
 
+    for rt in responseTimes {
+        if divisor == 0 {
+            subtotal = *rt;
+            divisor = 1
+        }
+        //println!("Divisor {divisor}, Subbie: {subtotal}");
+        else {
+            let mut average = subtotal / divisor;
+            // println!(
+            //     "subtotal: {} divisor: {} Average: {}",
+            //     subtotal, divisor, &average
+            // );
+            let mut floaterage = subtotal as f64 / divisor as f64;
+            // println!("Float Average: {}", &floaterage);
 
-	for rt in responseTimes {
-		if divisor == 0 {
-			subtotal = *rt;
-			divisor = 1
-		}
-
-		let mut average = subtotal / divisor;
-		println!("Average: {}", &average);
-
-		if *rt > average {
-			counter += 1;
-		}
-		subtotal = subtotal + *rt;
-		divisor = divisor + 1;
-	}
-	counter
+            if *rt > average {
+                counter += 1;
+            }
+            subtotal = subtotal + *rt;
+            divisor = divisor + 1;
+        }
+    }
+    counter
 }
 
 fn main() {
-	println!("\x1b[2J\x1b[H\x1b[3J");
-	let stdin = io::stdin();
-	let mut stdin_iterator = stdin.lock().lines();
+    println!("\x1b[2J\x1b[H\x1b[3J");
+    let stdin = io::stdin();
+    let mut stdin_iterator = stdin.lock().lines();
 
-	let responseTimes_count = stdin_iterator.next().unwrap().unwrap().trim().parse::<i32>().unwrap();
+    let responseTimes_count = stdin_iterator
+        .next()
+        .unwrap()
+        .unwrap()
+        .trim()
+        .parse::<i32>()
+        .unwrap();
 
-	let mut responseTimes: Vec<i32> = Vec::with_capacity(responseTimes_count as usize);
+    let mut responseTimes: Vec<i32> = Vec::with_capacity(responseTimes_count as usize);
 
-	for _ in 0..responseTimes_count {
-		let responseTimes_item = stdin_iterator.next().unwrap().unwrap().trim().parse::<i32>().unwrap();
-		responseTimes.push(responseTimes_item);
-	}
+    for _ in 0..responseTimes_count {
+        let responseTimes_item = stdin_iterator
+            .next()
+            .unwrap()
+            .unwrap()
+            .trim()
+            .parse::<i32>()
+            .unwrap();
+        responseTimes.push(responseTimes_item);
+    }
 
-	let result = countResponseTimeRegressions(&responseTimes);
+    let result = countResponseTimeRegressions(&responseTimes);
 
-	println!("{}", result);
+    println!("{}", result);
 }
