@@ -18,21 +18,25 @@ fn countResponseTimeRegressions(responseTimes: &[i32]) -> i32 {
 
 
 	for rt in responseTimes {
-		divisor += 1;
-		if counter == 0 {
+		if divisor == 0 {
 			subtotal = *rt;
+			divisor = 1
 		}
-		else {
-			subtotal = subtotal + *rt;
-			if rt > &(subtotal / divisor) {
-				counter += 1;
-			}
+
+		let mut average = subtotal / divisor;
+		println!("Average: {}", &average);
+
+		if *rt > average {
+			counter += 1;
 		}
+		subtotal = subtotal + *rt;
+		divisor = divisor + 1;
 	}
 	counter
 }
 
 fn main() {
+	println!("\x1b[2J\x1b[H\x1b[3J");
 	let stdin = io::stdin();
 	let mut stdin_iterator = stdin.lock().lines();
 
