@@ -11,14 +11,14 @@ fn countResponseTimeRegressions(responseTimes: &[i32]) -> i32 {
     // Write your code here
     //println!("{:?}", &responseTimes);
 
-    let mut divisor = 0;
+    let mut divisor: u64 = 0;
     let mut counter = 0;
-    let mut subtotal = 0;
+    let mut subtotal: u64 = 0;
 
     for entry in responseTimes {
-		subtotal += entry;
+		subtotal += *entry as u64;
 		divisor += 1;
-		if entry > &(&subtotal / &divisor) {
+		if *entry as u64 > (subtotal / divisor) {
 			counter += 1;
 	}}
     counter
